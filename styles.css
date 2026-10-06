@@ -1,0 +1,616 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    background: #000;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+}
+
+header {
+    height: 90px;
+    width: 100%;
+    padding: 0 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #000;
+    position: relative;
+    z-index: 20;
+}
+
+header img {
+    width: 120px;
+}
+
+nav ul {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #777;
+}
+
+main {
+    width: 100%;
+}
+
+.carousel {
+    width: 100%;
+    height: calc(100vh - 140px);
+    min-height: 600px;
+    position: relative;
+    overflow: hidden;
+    background: #000;
+}
+
+.carousel-list {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    list-style: none;
+}
+
+.carousel-item {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateX(100%);
+}
+
+.carousel-item.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+
+    transition: transform 0.8s ease, opacity 0.8s ease;
+}
+
+.car-img {
+    width: 60%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+    z-index: 2;
+}
+
+.car-img::before {
+    content: "";
+
+    position: absolute;
+
+    width: 70%;
+    height: 35px;
+
+    bottom: 22%;
+    left: 15%;
+
+    background: rgba(255, 255, 255, 0.18);
+
+    border-radius: 50%;
+
+    filter: blur(20px);
+
+    animation: shadowMove 2s ease-in-out infinite;
+}
+
+.car-img img {
+    width: 90%;
+    max-width: 800px;
+
+    position: relative;
+    z-index: 3;
+
+    filter: drop-shadow(0 30px 25px rgba(255, 255, 255, 0.08));
+
+    animation: carMovement 2.5s ease-in-out infinite;
+}
+
+@keyframes carMovement {
+
+    0% {
+        transform: translateX(-20px) translateY(5px) rotate(-1deg);
+    }
+
+    50% {
+        transform: translateX(20px) translateY(-5px) rotate(1deg);
+    }
+
+    100% {
+        transform: translateX(-20px) translateY(5px) rotate(-1deg);
+    }
+
+}
+
+@keyframes shadowMove {
+
+    0% {
+        transform: scaleX(0.8);
+        opacity: 0.3;
+    }
+
+    50% {
+        transform: scaleX(1.1);
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: scaleX(0.8);
+        opacity: 0.3;
+    }
+
+}
+
+.speed-lines {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    left: 0;
+    top: 0;
+
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.speed-lines::before,
+.speed-lines::after {
+    content: "";
+
+    position: absolute;
+
+    width: 400px;
+    height: 2px;
+
+    right: -400px;
+
+    background: #333;
+
+    box-shadow:
+        0 30px #222,
+        0 60px #333,
+        0 90px #222,
+        0 120px #333;
+
+    animation: speed 1.2s linear infinite;
+}
+
+.speed-lines::after {
+    top: 60%;
+    animation-delay: 0.5s;
+}
+
+@keyframes speed {
+
+    0% {
+        transform: translateX(0);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: translateX(-1000px);
+        opacity: 0;
+    }
+
+}
+
+.content {
+    width: 40%;
+    padding: 40px 7% 40px 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+
+    position: relative;
+    z-index: 5;
+}
+
+.car-information {
+    color: #888;
+
+    font-size: 15px;
+
+    margin-bottom: 15px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 3px;
+
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.carousel-item.active .car-information {
+    animation: textUp 0.8s ease forwards;
+    animation-delay: 0.3s;
+}
+
+.content h2 {
+    font-size: clamp(50px, 7vw, 100px);
+
+    line-height: 0.9;
+
+    text-transform: uppercase;
+
+    margin-bottom: 30px;
+
+    font-weight: 900;
+
+    opacity: 0;
+    transform: translateX(80px);
+}
+
+.carousel-item.active h2 {
+    animation: titleEnter 0.9s ease forwards;
+    animation-delay: 0.4s;
+}
+
+.description {
+    max-width: 400px;
+
+    color: #aaa;
+
+    font-size: 16px;
+
+    line-height: 1.7;
+
+    margin-bottom: 30px;
+
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.carousel-item.active .description {
+    animation: textUp 0.8s ease forwards;
+    animation-delay: 0.6s;
+}
+
+.btn-more {
+    border: 1px solid #fff;
+
+    background: transparent;
+
+    color: #fff;
+
+    padding: 15px 30px;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+    position: relative;
+
+    overflow: hidden;
+
+    transition: 0.4s;
+
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.carousel-item.active .btn-more {
+    animation: textUp 0.8s ease forwards;
+    animation-delay: 0.8s;
+}
+
+.btn-more::before {
+    content: "";
+
+    position: absolute;
+
+    width: 0;
+    height: 100%;
+
+    left: 0;
+    top: 0;
+
+    background: #fff;
+
+    transition: 0.4s;
+
+    z-index: -1;
+}
+
+.btn-more:hover::before {
+    width: 100%;
+}
+
+.btn-more:hover {
+    color: #000;
+}
+
+@keyframes textUp {
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+@keyframes titleEnter {
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+}
+
+.carousel-controls {
+    position: absolute;
+
+    bottom: 80px;
+    right: 7%;
+
+    display: flex;
+
+    gap: 15px;
+
+    z-index: 10;
+}
+
+.carousel-controls button {
+    width: 50px;
+    height: 50px;
+
+    border: 1px solid #444;
+
+    background: #000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.carousel-controls button:hover {
+    background: #fff;
+}
+
+.carousel-controls button img {
+    width: 20px;
+    filter: invert(1);
+}
+
+.carousel-controls .next img {
+    transform: rotate(180deg);
+}
+
+.carousel-controls button:hover img {
+    filter: invert(0);
+}
+
+.indicators {
+    position: absolute;
+
+    bottom: 95px;
+    left: 7%;
+
+    z-index: 10;
+}
+
+.indicators ul {
+    display: flex;
+
+    gap: 10px;
+
+    list-style: none;
+}
+
+.indicators li {
+    width: 40px;
+    height: 3px;
+
+    background: #444;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.indicators li.active {
+    width: 70px;
+
+    background: #fff;
+}
+
+footer {
+    height: 50px;
+
+    background: #000;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #555;
+
+    font-size: 12px;
+}
+
+@media (max-width: 900px) {
+
+    header {
+        padding: 0 5%;
+    }
+
+    nav ul {
+        gap: 20px;
+    }
+
+    .carousel {
+        height: auto;
+        min-height: 750px;
+    }
+
+    .carousel-item {
+        flex-direction: column;
+        justify-content: flex-start;
+
+        padding-top: 40px;
+    }
+
+    .car-img {
+        width: 100%;
+        height: 45%;
+    }
+
+    .car-img img {
+        width: 90%;
+    }
+
+    .content {
+        width: 100%;
+
+        padding: 20px 8%;
+
+        align-items: center;
+
+        text-align: center;
+    }
+
+    .description {
+        max-width: 500px;
+    }
+
+    .carousel-controls {
+        right: 5%;
+        bottom: 35px;
+    }
+
+    .indicators {
+        left: 5%;
+        bottom: 55px;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    header {
+        height: 75px;
+
+        padding: 0 20px;
+    }
+
+    header img {
+        width: 90px;
+    }
+
+    nav ul {
+        gap: 12px;
+    }
+
+    nav a {
+        font-size: 10px;
+    }
+
+    .carousel {
+        min-height: 700px;
+    }
+
+    .car-img {
+        height: 38%;
+    }
+
+    .car-img img {
+        width: 100%;
+    }
+
+    .content {
+        padding: 10px 25px;
+    }
+
+    .car-information {
+        font-size: 12px;
+    }
+
+    .content h2 {
+        font-size: 45px;
+
+        margin-bottom: 20px;
+    }
+
+    .description {
+        font-size: 14px;
+
+        margin-bottom: 20px;
+    }
+
+    .btn-more {
+        padding: 12px 22px;
+    }
+
+    .carousel-controls {
+        right: 25px;
+        bottom: 25px;
+    }
+
+    .carousel-controls button {
+        width: 40px;
+        height: 40px;
+    }
+
+    .indicators {
+        left: 25px;
+        bottom: 43px;
+    }
+
+    .indicators li {
+        width: 25px;
+    }
+
+    .indicators li.active {
+        width: 45px;
+    }
+
+}
